@@ -1,8 +1,8 @@
 package com.hidajasac.hidajasac_apis.persistence.entity.usuarios.usuario;
 
 import com.hidajasac.hidajasac_apis.persistence.entity.area.AreaEntity;
-import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Nacionalidad.TipoNacionalidadEntity;
-import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.tipoDocumento.TipoDocumentoIdentidadEntity;
+import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Nacionalidad.NacionalidadEntity;
+import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Documento.DocumentoIdentidadEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.nivelAcademico.NivelAcademicoEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.oficio.OficioEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.puesto.PuestoEntity;
@@ -47,15 +47,15 @@ public class UserEntity {
     private String direccion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_documento", nullable = false)
-    private TipoDocumentoIdentidadEntity tipoDocumento;
+    @JoinColumn(name = "id_documento", nullable = false)
+    private DocumentoIdentidadEntity documento;
 
     @Column(name = "numero_documento", unique = true, nullable = false)
     private String numeroDocumento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_nacionalidad", nullable = false)
-    private TipoNacionalidadEntity tiponacionalidad;
+    private NacionalidadEntity nacionalidad;
 
     @Column(name = "status", nullable = false)
     private boolean status;
@@ -72,7 +72,7 @@ public class UserEntity {
 
     @OneToOne
     @JoinColumn(name = "id_rol", nullable = false)
-    private RolEntity tipoRol;
+    private RolEntity rol;
 
     @Column(name = "fecha_creacion", updatable = false, nullable = false)
     private LocalDateTime fechaCreacion;

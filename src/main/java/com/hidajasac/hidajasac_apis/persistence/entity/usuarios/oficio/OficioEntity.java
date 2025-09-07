@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "oficio")
+@Table(name = "nombre")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +15,8 @@ public class OficioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo",unique = true,nullable = false, length = 50)
-    private String tipoOficio;
+    @Column(name = "nombre",unique = true,nullable = false, length = 50)
+    private String nombre;
 
     @Column(name = "status", nullable = false)
     private boolean status;

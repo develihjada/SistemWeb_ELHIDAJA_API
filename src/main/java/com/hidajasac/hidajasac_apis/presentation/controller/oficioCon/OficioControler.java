@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/oficio")
+@RequestMapping("/nombre")
 public class OficioControler {
     private final OficioImp oficioService;
 
@@ -24,7 +24,7 @@ public class OficioControler {
 
     //findAll
     @GetMapping("/get_all")
-    public ResponseEntity<ApiResponse<OficioResponseDTO>> getAll() {
+    public ResponseEntity<ApiResponse<List<OficioResponseDTO>>> getAll() {
         List<OficioResponseDTO> data = oficioService.getAll();
         return ResponseEntity.ok(new ApiResponse<>(data));
     }
@@ -49,7 +49,7 @@ public class OficioControler {
     }
 
     //deactivate
-    @PatchMapping("/deactivate/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<ApiResponse<OficioResponseDTO>> deactivate(@PathVariable Long id) {
         return ResponseEntity.ok(new ApiResponse<>(oficioService.deactivate(id)));
     }

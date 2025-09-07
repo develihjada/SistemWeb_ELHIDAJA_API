@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PuestoResponseDTO {
     private Long id;
-    private String tipoPuesto;
+    private String nombre;
     private boolean status;
 }

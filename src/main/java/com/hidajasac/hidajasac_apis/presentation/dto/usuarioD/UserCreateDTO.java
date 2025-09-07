@@ -72,10 +72,10 @@ public class UserCreateDTO {
     private Long id_rol;
 
     // Campos específicos de Empleado
-    @NotNull(message = "El ID del oficio es obligatorio")
+    @NotNull(message = "El ID del nombre es obligatorio")
     private Long id_oficio;
 
-    @NotNull(message = "El ID del nivel académico es obligatorio")
+    @NotNull(message = "El ID del nombre académico es obligatorio")
     private Long id_nivel_academico;
 
     @NotNull(message = "El ID del área es obligatoria")

@@ -2,7 +2,7 @@ package com.hidajasac.hidajasac_apis.presentation.controller.rolCon;
 import com.hidajasac.hidajasac_apis.presentation.dto.rolD.RolCreateDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.rolD.RolResponseDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.rolD.RolUpdateDTO;
-import com.hidajasac.hidajasac_apis.service.implementacion.rolCon.RolImp;
+import com.hidajasac.hidajasac_apis.service.implementacion.rolImp.RolImp;
 import com.hidajasac.hidajasac_apis.util.genericResponse.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class RolControler {
     }
 
     @GetMapping("/get_all")
-    public ResponseEntity<ApiResponse<RolResponseDTO>> getAll() {
+    public ResponseEntity<ApiResponse<List<RolResponseDTO>>> getAll() {
         List<RolResponseDTO> roles = rolService.getAllS();
         return ResponseEntity.ok(new ApiResponse<>(roles));
     }
@@ -45,7 +45,7 @@ public class RolControler {
         return ResponseEntity.ok(new ApiResponse<>(updated));
     }
 
-    @PatchMapping("/deactivate/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<ApiResponse<RolResponseDTO>> deactivate(@PathVariable Long id) {
         RolResponseDTO updated = rolService.desactivateSer(id);
         return ResponseEntity.ok(new ApiResponse<>(updated));

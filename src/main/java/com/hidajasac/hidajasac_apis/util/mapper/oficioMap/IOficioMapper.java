@@ -17,25 +17,22 @@ public interface IOficioMapper {
 
     //response all attributes
     //output <-
-    // OficioEntity -> OficioResponseDTO
+    //Entity -> ResponseDTO
     OficioResponseDTO oficioEntityToResponseDTO(OficioEntity oficioEntity);
 
-    //for two atributes
+    //response some attributes
     //output <-
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "tipoOficio", target = "tipoOficio")
+    //Entity -> ResponseDTO
     OficioNombreDTO oficioEntityToOficioNombreDTO(OficioEntity oficioEntity);
 
     //for new
-    //input
-    // OficioCreateDTO -> OficioEntity
-    @Mapping(source = "tipoOficio", target = "tipoOficio")
+    //input ->
+    //CreateDTO -> Entity
     OficioEntity oficioCreateDTOToEntity(OficioCreateDTO oficioCreateDTO);
 
     //for update
-    //input
-    // OficioUpdateDTO ->  OficioEntity
-    @Mapping(source = "tipoOficio", target = "tipoOficio")
+    //input ->
+    //UpdateDTO -> Entity
     void updateOficioFromDTO(OficioUpdateDTO dto, @MappingTarget OficioEntity entity);
 
 }

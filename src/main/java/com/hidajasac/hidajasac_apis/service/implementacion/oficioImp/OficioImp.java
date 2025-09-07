@@ -2,7 +2,7 @@ package com.hidajasac.hidajasac_apis.service.implementacion.oficioImp;
 
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.oficio.OficioEntity;
 import com.hidajasac.hidajasac_apis.persistence.repository.oficioRep.IOficio;
-import com.hidajasac.hidajasac_apis.persistence.repository.usuarioRep.IUser;
+import com.hidajasac.hidajasac_apis.persistence.repository.userRep.IUser;
 import com.hidajasac.hidajasac_apis.presentation.dto.oficioD.OficioCreateDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.oficioD.OficioResponseDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.oficioD.OficioUpdateDTO;
@@ -10,8 +10,6 @@ import com.hidajasac.hidajasac_apis.service.exeption.InvalidStateException;
 import com.hidajasac.hidajasac_apis.service.exeption.ResourceAlreadyExistsException;
 import com.hidajasac.hidajasac_apis.util.mapper.oficioMap.IOficioMapper;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,15 +41,15 @@ public class OficioImp {
     //findById
     public OficioResponseDTO getById(Long id) {
         OficioEntity entity = oficioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El oficio con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre con ID " + id + " no fue encontrado"));
         return IOficioMapper.INSTANCE.oficioEntityToResponseDTO(entity);
     }
 
     //create
     public OficioResponseDTO create(OficioCreateDTO dto) {
-        Optional<OficioEntity> existing = oficioRepository.findByTipoOficio(dto.getTipoOficio());
+        Optional<OficioEntity> existing = oficioRepository.findByNombre(dto.getNombre());
         if (existing.isPresent()) {
-            throw new ResourceAlreadyExistsException("El oficio con el nombre '" + dto.getTipoOficio() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El nombre con el nombre '" + dto.getNombre() + "' ya existe");
         }
         OficioEntity saved = oficioRepository.save(IOficioMapper.INSTANCE.oficioCreateDTOToEntity(dto));
         return IOficioMapper.INSTANCE.oficioEntityToResponseDTO(saved);
@@ -60,15 +58,15 @@ public class OficioImp {
     //update
     public OficioResponseDTO update(Long id, OficioUpdateDTO dto) {
         OficioEntity entity = oficioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El oficio con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre con ID " + id + " no fue encontrado"));
 
-        // Verificar si el tipoOficio ya existe
-        Optional<OficioEntity> existing = oficioRepository.findByTipoOficio(dto.getTipoOficio());
+        // Verificar si el nombre ya existe
+        Optional<OficioEntity> existing = oficioRepository.findByNombre(dto.getNombre());
         if (existing.isPresent() && !existing.get().getId().equals(id)) {
-            throw new ResourceAlreadyExistsException("El oficio con el nombre '" + dto.getTipoOficio() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El nombre con el nombre '" + dto.getNombre() + "' ya existe");
         }
         if (userRepository.existsByOficioIdAndStatusTrue(id)){
-            throw new ResourceAlreadyExistsException("No se puede desactivar el oficio ya que contiene usuarios activos ");
+            throw new ResourceAlreadyExistsException("No se puede desactivar el nombre ya que contiene usuarios activos ");
         }
         //update
         IOficioMapper.INSTANCE.updateOficioFromDTO(dto, entity);
@@ -78,10 +76,10 @@ public class OficioImp {
     //deactivate
     public OficioResponseDTO deactivate(Long id) {
         OficioEntity entity = oficioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El oficio con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre con ID " + id + " no fue encontrado"));
 
         if (!entity.isStatus()) {
-            throw new InvalidStateException("El oficio ya está desactivado");
+            throw new InvalidStateException("El nombre ya está desactivado");
         }
 
         entity.setStatus(false);
@@ -91,10 +89,10 @@ public class OficioImp {
     //activate
     public OficioResponseDTO activate(Long id) {
         OficioEntity entity = oficioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El oficio con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre con ID " + id + " no fue encontrado"));
 
         if (entity.isStatus()) {
-            throw new InvalidStateException("El oficio ya está activado");
+            throw new InvalidStateException("El nombre ya está activado");
         }
 
         entity.setStatus(true);

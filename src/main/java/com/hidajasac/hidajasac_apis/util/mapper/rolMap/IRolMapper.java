@@ -15,24 +15,27 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface IRolMapper {
+
     IRolMapper INSTANCE = Mappers.getMapper(IRolMapper.class);
 
     //response all attributes
-    // RolEntity -> RolResponseDTO
+    //output <-
+    //Entity -> ResponseDTO
     RolResponseDTO rolEntityToRolResponseDTO(RolEntity rolEntity);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "tipoRol", target = "tipoRol")
+    //response some attributes
+    //output <-
+    //Entity -> ResponseDTO
     RolNombreDTO areaEntityToAreaNombreDTO(RolEntity entity);
+
     //for new
-    //input
-    // RolCreateDTO -> RolEntity
-    @Mapping(source = "tipoRol", target = "tipoRol")
+    //input ->
+    //CreateDTO -> Entity
     RolEntity rolCreateDTOToRolEntity(RolCreateDTO rolCreateDTO);
 
-    //for update tipo_rol
-    //input
-    @Mapping(source = "tipoRol", target = "tipoRol")
+    //for update name
+    //input ->
+    //UpdateDTO -> Entity
     void updateRolFromDto(RolUpdateDTO rolUpdateDTO, @MappingTarget RolEntity rolEntity);
 
 }

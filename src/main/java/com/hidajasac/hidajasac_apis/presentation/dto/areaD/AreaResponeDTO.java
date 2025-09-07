@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AreaResponeDTO {
     private Long id;
-    private String nombreArea;
+    private String nombre;
     private boolean status;
 }

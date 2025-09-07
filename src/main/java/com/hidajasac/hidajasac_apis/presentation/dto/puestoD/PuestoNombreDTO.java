@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PuestoNombreDTO {
     private Long id;
-    private String tipoPuesto;
+    private String nombre;
 }

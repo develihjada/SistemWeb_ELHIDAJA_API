@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AreaNombreDTO {
     private Long id;
-    private String nombreArea;
+    private String nombre;
 }

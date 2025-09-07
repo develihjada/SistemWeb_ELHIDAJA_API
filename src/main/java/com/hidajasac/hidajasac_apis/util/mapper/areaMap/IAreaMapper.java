@@ -6,31 +6,32 @@ import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaNombreDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaResponeDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaUpdateDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface IAreaMapper {
+
     IAreaMapper INSTANCE = Mappers.getMapper(IAreaMapper.class);
 
     //response all attributes
-    // AreaEntity -> AreaResponseDTO
+    //output <-
+    //Entity -> ResponseDTO
     AreaResponeDTO areaEntityToAreaResponseDTO(AreaEntity objAreaEntity);
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "nombreArea", target = "nombreArea")
+
+    //response some attributes
+    //output <-
+    //Entity -> ResponseDTO
     AreaNombreDTO areaEntityToAreaNombreDTO(AreaEntity entity);
 
     //for new
-    //input
-    // AreaCreateDTO -> AreaEntity
-    @Mapping(source = "nombreArea",target = "nombreArea")
+    //input ->
+    //CreateDTO -> Entity
     AreaEntity areaCreateDTOToAreaEntity(AreaCreateDTO objAreaCreateDTO);
 
-    //for update name
-    //input
-    // AreaUpdateDTO -> AreaEntity
-    @Mapping(source = "nombreArea",target = "nombreArea")
+    //for update
+    //input ->
+    //UpdateDTO -> Entity
     void updateAreaFromDto(AreaUpdateDTO objAreaUpdateDTO ,@MappingTarget AreaEntity areaEntity);
 
 }

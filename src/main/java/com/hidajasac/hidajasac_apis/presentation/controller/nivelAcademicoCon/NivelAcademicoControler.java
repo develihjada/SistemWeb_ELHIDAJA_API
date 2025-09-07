@@ -22,7 +22,7 @@ public class NivelAcademicoControler  {
 
     //findAll
     @GetMapping("/get_all")
-    public ResponseEntity<ApiResponse<NivelAcademicoResponseDTO>> getAll() {
+    public ResponseEntity<ApiResponse<List<NivelAcademicoResponseDTO>>> getAll() {
         List<NivelAcademicoResponseDTO> niveles = nivelService.getAllS();
         return ResponseEntity.ok(new ApiResponse<>(niveles));
     }
@@ -49,7 +49,7 @@ public class NivelAcademicoControler  {
     }
 
     //deactivate
-    @PatchMapping("/deactivate/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<ApiResponse<NivelAcademicoResponseDTO>> deactivate(@PathVariable Long id) {
         NivelAcademicoResponseDTO updated = nivelService.desactivateSer(id);
         return ResponseEntity.ok(new ApiResponse<>(updated));

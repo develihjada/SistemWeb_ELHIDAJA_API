@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface INivelAcademico extends JpaRepository<NivelAcademicoEntity, Long> {
-    Optional<NivelAcademicoEntity> findByTipoNivel(String tipoNivel);
+    //buscar por nombre
+    Optional<NivelAcademicoEntity> findByNombre(String nombre);
 }

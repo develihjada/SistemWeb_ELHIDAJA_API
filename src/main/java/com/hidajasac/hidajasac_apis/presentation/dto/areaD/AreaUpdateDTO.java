@@ -15,5 +15,5 @@ public class AreaUpdateDTO {
     @NotBlank(message = "El nombre del area no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre del area debe tener entre 3 y 50 caracteres")
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El nombre del area solo puede contener letras y espacios")
-    private String nombreArea;
+    private String nombre;
 }

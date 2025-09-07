@@ -15,8 +15,8 @@ public class RolEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @Column (name = "tipo_rol",nullable = false,unique = true, length = 50)
-    private String tipoRol;
+    @Column (name = "nombre",nullable = false,unique = true, length = 50)
+    private String nombre;
 
     @Column(name = "status", nullable = false)
     private boolean status=true;

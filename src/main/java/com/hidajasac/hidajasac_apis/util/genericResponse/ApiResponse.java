@@ -11,20 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 public class ApiResponse<T> {
 
-    private List<T> data;
+    private T data;
     private boolean exito;
     private String msge;
 
-    //lista de datos
-    public ApiResponse(List<T> data) {
-        this.data = data;
-        this.exito = true;
-        this.msge = "--ok--";
-    }
-
     // solo objeto
     public ApiResponse(T data) {
-        this.data = List.of(data);
+        this.data = data;
         this.exito = true;
         this.msge = "--ok--";
     }
