@@ -15,16 +15,24 @@ public interface INivelAcademicoMapper {
 
     INivelAcademicoMapper INSTANCE = Mappers.getMapper(INivelAcademicoMapper.class);
 
+    //response all attributes
+    //output <-
+    //Entity -> ResponseDTO
     NivelAcademicoResponseDTO nivelEntityToResponseDTO(NivelAcademicoEntity entity);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "tipoNivel", target = "tipoNivel")
+    //response some attributes
+    //output <-
+    //Entity -> ResponseDTO
     NivelAcademicoNombreDTO nivelEntityToNivelAcademicoNombreDTO (NivelAcademicoEntity entity);
 
-    @Mapping(source = "tipoNivel", target = "tipoNivel")
+    //for new
+    //input ->
+    //CreateDTO -> Entity
     NivelAcademicoEntity createDTOToEntity(NivelAcademicoCreateDTO dto);
 
-    @Mapping(source = "tipoNivel", target = "tipoNivel")
+    //for update
+    //input ->
+    //UpdateDTO -> Entity
     void updateFromDto(NivelAcademicoUpdateDTO dto, @MappingTarget NivelAcademicoEntity entity);
 }
 

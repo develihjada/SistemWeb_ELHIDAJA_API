@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NivelAcademicoNombreDTO {
     private Long id;
-    private String tipoNivel;
+    private String nombre;
 }

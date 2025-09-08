@@ -2,7 +2,7 @@ package com.hidajasac.hidajasac_apis.service.implementacion.areacImp;
 
 import com.hidajasac.hidajasac_apis.persistence.entity.area.AreaEntity;
 import com.hidajasac.hidajasac_apis.persistence.repository.areaRep.IArea;
-import com.hidajasac.hidajasac_apis.persistence.repository.usuarioRep.IUser;
+import com.hidajasac.hidajasac_apis.persistence.repository.userRep.IUser;
 import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaCreateDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaResponeDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.areaD.AreaUpdateDTO;
@@ -48,9 +48,9 @@ public class AreaImp {
 
     //create
     public AreaResponeDTO saveSer(AreaCreateDTO areaSave) {
-        Optional<AreaEntity> existingArea = repArea.findByNombreArea(areaSave.getNombreArea());
+        Optional<AreaEntity> existingArea = repArea.findByNombre(areaSave.getNombre());
         if (existingArea.isPresent()) {
-            throw new ResourceAlreadyExistsException("El área con el nombre '" + areaSave.getNombreArea() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El área con el nombre " + areaSave.getNombre() + " ya existe");
         }
         AreaEntity aE = repArea.save(IAreaMapper.INSTANCE.areaCreateDTOToAreaEntity(areaSave));
         return IAreaMapper.INSTANCE.areaEntityToAreaResponseDTO(aE);
@@ -62,9 +62,9 @@ public class AreaImp {
                 .orElseThrow(() -> new EntityNotFoundException("El area con ID " + id + " no fue encontrado"));
 
         //verificar si el nombre existe y no es el mismo registro
-        Optional<AreaEntity> existingArea = repArea.findByNombreArea(areaUp.getNombreArea());
+        Optional<AreaEntity> existingArea = repArea.findByNombre(areaUp.getNombre());
         if (existingArea.isPresent() && !existingArea.get().getId().equals(id)) {
-            throw new ResourceAlreadyExistsException("El área con el nombre '" + areaUp.getNombreArea() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El área con el nombre '" + areaUp.getNombre() + "' ya existe");
         }
         //update
         IAreaMapper.INSTANCE.updateAreaFromDto(areaUp, aE);

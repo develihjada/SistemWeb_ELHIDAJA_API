@@ -12,7 +12,7 @@ public class RolResponseDTO {
 
     private  Long id;
 
-    private String tipoRol;
+    private String nombre;
 
     private boolean status;
 }

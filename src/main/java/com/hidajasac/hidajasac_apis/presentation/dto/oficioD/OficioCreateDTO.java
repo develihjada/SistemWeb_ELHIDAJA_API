@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class OficioCreateDTO {
 
 
-    @NotBlank(message = "El tipo de oficio no puede estar vacío")
-    @Size(min = 3, max = 20, message = "El tipo de oficio debe tener entre 3 y 20 caracteres")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El tipo de oficio solo puede contener letras y espacios")
-    private String tipoOficio;
+    @NotBlank(message = "El nombre del nombre no puede estar vacío")
+    @Size(min = 3, max = 20, message = "El nombre del nombre debe tener entre 3 y 20 caracteres")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El nombre del nombre solo puede contener letras y espacios")
+    private String nombre;
 }

@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PuestoUpdateDTO {
 
-    @NotBlank(message = "El tipo no puede estar vacío")
-    @Size(min = 3, max = 20, message = "El tipo debe tener entre 3 y 20 caracteres")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El tipo solo puede contener letras y espacios")
-    private String tipoPuesto;
+    @NotBlank(message = "El nombre del  puesto no puede estar vacío")
+    @Size(min = 3, max = 20, message = "El nombre del  puesto debe tener entre 3 y 20 caracteres")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El nombre del  puesto solo puede contener letras y espacios")
+    private String nombre;
 }

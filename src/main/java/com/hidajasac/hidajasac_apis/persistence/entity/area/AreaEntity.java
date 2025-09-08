@@ -15,8 +15,8 @@ public class AreaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_area",unique = true,nullable = false, length = 50)
-    private String nombreArea;
+    @Column(name = "nombre",unique = true,nullable = false, length = 50)
+    private String nombre;
 
     @Column(name = "status", nullable = false)
     private boolean status=true;

@@ -2,17 +2,17 @@ package com.hidajasac.hidajasac_apis.service.implementacion.userImp;
 
 
 import com.hidajasac.hidajasac_apis.persistence.entity.area.AreaEntity;
-import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Nacionalidad.TipoNacionalidadEntity;
-import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.tipoDocumento.TipoDocumentoIdentidadEntity;
+import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Nacionalidad.NacionalidadEntity;
+import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.documentoIdentidad.Documento.DocumentoIdentidadEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.nivelAcademico.NivelAcademicoEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.oficio.OficioEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.puesto.PuestoEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.rol.RolEntity;
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.usuario.UserEntity;
 import com.hidajasac.hidajasac_apis.persistence.repository.areaRep.IArea;
-import com.hidajasac.hidajasac_apis.persistence.repository.documentoIdentidad.Nacionalidad.ITipoNacionalidad;
-import com.hidajasac.hidajasac_apis.persistence.repository.documentoIdentidad.tipoDocumento.ITipoDocumentoIdentidad;
-import com.hidajasac.hidajasac_apis.persistence.repository.usuarioRep.IUser;
+import com.hidajasac.hidajasac_apis.persistence.repository.documentoIdentidad.NacionalidadRep.INacionalidad;
+import com.hidajasac.hidajasac_apis.persistence.repository.documentoIdentidad.DocumentoRep.IDocumentoIdentidad;
+import com.hidajasac.hidajasac_apis.persistence.repository.userRep.IUser;
 import com.hidajasac.hidajasac_apis.persistence.repository.nivelAcademicoRep.INivelAcademico;
 import com.hidajasac.hidajasac_apis.persistence.repository.oficioRep.IOficio;
 import com.hidajasac.hidajasac_apis.persistence.repository.puestoRep.IPuesto;
@@ -23,7 +23,7 @@ import com.hidajasac.hidajasac_apis.presentation.dto.usuarioD.UserUpdateDTO;
 import com.hidajasac.hidajasac_apis.service.exeption.InvalidStateException;
 import com.hidajasac.hidajasac_apis.service.exeption.ResourceAlreadyExistsException;
 import com.hidajasac.hidajasac_apis.service.validations.validateDocumentoPorNacionalidad;
-import com.hidajasac.hidajasac_apis.util.mapper.empleadoMap.IUserMapper;
+import com.hidajasac.hidajasac_apis.util.mapper.userMap.IUserMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,8 +39,8 @@ public class UserImp {
     private final IUser repUser;
     private final PasswordEncoder passwordEncoder;
     private final IUserMapper empleadoMapper;
-    private final ITipoDocumentoIdentidad tipoDocumentoRepo;
-    private final ITipoNacionalidad nacionalidadRepo;
+    private final IDocumentoIdentidad tipoDocumentoRepo;
+    private final INacionalidad nacionalidadRepo;
     private final IRol rolRepo;
     private final IOficio oficioRepo;
     private final INivelAcademico nivelAcademicoRepo;
@@ -53,8 +53,8 @@ public class UserImp {
             IUser repUser,
             PasswordEncoder passwordEncoder,
             IUserMapper empleadoMapper,
-            ITipoDocumentoIdentidad tipoDocumentoRepo,
-            ITipoNacionalidad nacionalidadRepo,
+            IDocumentoIdentidad tipoDocumentoRepo,
+            INacionalidad nacionalidadRepo,
             IRol rolRepo,
             IOficio oficioRepo,
             INivelAcademico nivelAcademicoRepo,
@@ -99,7 +99,7 @@ public class UserImp {
         validateUniqueFields(userCreateDTO.getTelefono(), userCreateDTO.getNumeroDocumento(), userCreateDTO.getEmail());
 
         // Verificar existencia de las entidades por ID
-        TipoDocumentoIdentidadEntity tipoDocumento = tipoDocumentoRepo.findById(userCreateDTO.getId_tipo_documento())
+        DocumentoIdentidadEntity tipoDocumento = tipoDocumentoRepo.findById(userCreateDTO.getId_tipo_documento())
                 .orElseThrow(() -> new EntityNotFoundException("Tipo de documento no encontrado"));
 
         if (!tipoDocumento.isStatus()) {
@@ -108,8 +108,8 @@ public class UserImp {
 
         validarDoc.validateDocumentoPorNacional(userCreateDTO.getId_nacionalidad(), userCreateDTO.getId_tipo_documento(), userCreateDTO.getNumeroDocumento());
 
-        TipoNacionalidadEntity nacionalidad = nacionalidadRepo.findById(userCreateDTO.getId_nacionalidad())
-                .orElseThrow(() -> new EntityNotFoundException("Nacionalidad no encontrada"));
+        NacionalidadEntity nacionalidad = nacionalidadRepo.findById(userCreateDTO.getId_nacionalidad())
+                .orElseThrow(() -> new EntityNotFoundException("NacionalidadRep no encontrada"));
 
         if (!nacionalidad.isStatus()) {
             throw new InvalidStateException("Esta nacionalidad  está desactivada");
@@ -126,14 +126,14 @@ public class UserImp {
                 .orElseThrow(() -> new EntityNotFoundException("Oficio no encontrado"));
 
         if (!oficio.isStatus()) {
-            throw new InvalidStateException("Este de oficio  está desactivado");
+            throw new InvalidStateException("Este de nombre  está desactivado");
         }
 
         NivelAcademicoEntity nivel = nivelAcademicoRepo.findById(userCreateDTO.getId_nivel_academico())
                 .orElseThrow(() -> new EntityNotFoundException("Nivel académico no encontrado"));
 
         if (!nivel.isStatus()) {
-            throw new InvalidStateException("Este de nivel academico  está desactivado");
+            throw new InvalidStateException("Este de nombre academico  está desactivado");
         }
 
         AreaEntity area = areaRepo.findById(userCreateDTO.getId_area())
@@ -154,10 +154,10 @@ public class UserImp {
         UserEntity userEntity = empleadoMapper.EmpleadoEntityCreateDTOToEmpleadoEntity(userCreateDTO);
 
         // Setear entidades verificadas manualmente
-        userEntity.setTipoDocumento(tipoDocumento);
-        userEntity.setTiponacionalidad(nacionalidad);
+        userEntity.setDocumento(tipoDocumento);
+        userEntity.setNacionalidad(nacionalidad);
         userEntity.setNumeroDocumento(userCreateDTO.getNumeroDocumento());
-        userEntity.setTipoRol(rol);
+        userEntity.setRol(rol);
         userEntity.setOficio(oficio);
         userEntity.setNivelAcademico(nivel);
         userEntity.setArea(area);
@@ -206,14 +206,14 @@ public class UserImp {
                 .orElseThrow(() -> new EntityNotFoundException("Oficio no encontrado"));
 
         if (!oficio.isStatus()) {
-            throw new InvalidStateException("Este de oficio  está desactivado");
+            throw new InvalidStateException("Este de nombre  está desactivado");
         }
 
         NivelAcademicoEntity nivel = nivelAcademicoRepo.findById(userUpdateDTO.getId_nivel_academico())
                 .orElseThrow(() -> new EntityNotFoundException("Nivel académico no encontrado"));
 
         if (!nivel.isStatus()) {
-            throw new InvalidStateException("Este de nivel academico  está desactivado");
+            throw new InvalidStateException("Este de nombre academico  está desactivado");
         }
 
         AreaEntity area = areaRepo.findById(userUpdateDTO.getId_area())
@@ -234,7 +234,7 @@ public class UserImp {
         empleadoMapper.updateUserFromDto(userUpdateDTO, userEntity);
 
         // 5. Asignar las entidades relacionadas actualizadas
-        userEntity.setTipoRol(rol);
+        userEntity.setRol(rol);
         userEntity.setOficio(oficio);
         userEntity.setNivelAcademico(nivel);
         userEntity.setArea(area);

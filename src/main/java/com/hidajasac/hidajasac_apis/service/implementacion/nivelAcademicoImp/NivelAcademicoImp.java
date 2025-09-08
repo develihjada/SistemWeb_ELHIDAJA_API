@@ -2,7 +2,7 @@ package com.hidajasac.hidajasac_apis.service.implementacion.nivelAcademicoImp;
 
 import com.hidajasac.hidajasac_apis.persistence.entity.usuarios.nivelAcademico.NivelAcademicoEntity;
 import com.hidajasac.hidajasac_apis.persistence.repository.nivelAcademicoRep.INivelAcademico;
-import com.hidajasac.hidajasac_apis.persistence.repository.usuarioRep.IUser;
+import com.hidajasac.hidajasac_apis.persistence.repository.userRep.IUser;
 import com.hidajasac.hidajasac_apis.presentation.dto.nivelAcademicoD.NivelAcademicoCreateDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.nivelAcademicoD.NivelAcademicoResponseDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.nivelAcademicoD.NivelAcademicoUpdateDTO;
@@ -10,8 +10,6 @@ import com.hidajasac.hidajasac_apis.service.exeption.InvalidStateException;
 import com.hidajasac.hidajasac_apis.service.exeption.ResourceAlreadyExistsException;
 import com.hidajasac.hidajasac_apis.util.mapper.INivelAcademicoMap.INivelAcademicoMapper;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,15 +40,15 @@ public class NivelAcademicoImp {
     //findById
     public NivelAcademicoResponseDTO getByIdS(Long id) {
         NivelAcademicoEntity e = repNivel.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El nivel académico con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre académico con ID " + id + " no fue encontrado"));
         return INivelAcademicoMapper.INSTANCE.nivelEntityToResponseDTO(e);
     }
 
     //create
     public NivelAcademicoResponseDTO saveSer(NivelAcademicoCreateDTO dto) {
-        Optional<NivelAcademicoEntity> existing = repNivel.findByTipoNivel(dto.getTipoNivel());
+        Optional<NivelAcademicoEntity> existing = repNivel.findByNombre(dto.getNombre());
         if (existing.isPresent()) {
-            throw new ResourceAlreadyExistsException("El nivel académico '" + dto.getTipoNivel() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El nombre académico '" + dto.getNombre() + "' ya existe");
         }
         NivelAcademicoEntity saved = repNivel.save(INivelAcademicoMapper.INSTANCE.createDTOToEntity(dto));
         return INivelAcademicoMapper.INSTANCE.nivelEntityToResponseDTO(saved);
@@ -59,11 +57,11 @@ public class NivelAcademicoImp {
     //update
     public NivelAcademicoResponseDTO updateSer(NivelAcademicoUpdateDTO dto, Long id) {
         NivelAcademicoEntity e = repNivel.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El nivel académico con ID " + id + " no fue encontrado"));
-        // Validar que no exista otro registro con el mismo tipoNivel
-        Optional<NivelAcademicoEntity> existing = repNivel.findByTipoNivel(dto.getTipoNivel());
+                .orElseThrow(() -> new EntityNotFoundException("El nombre académico con ID " + id + " no fue encontrado"));
+        // Validar que no exista otro registro con el mismo nombre
+        Optional<NivelAcademicoEntity> existing = repNivel.findByNombre(dto.getNombre());
         if (existing.isPresent() && !existing.get().getId().equals(id)) {
-            throw new ResourceAlreadyExistsException("El nivel académico '" + dto.getTipoNivel() + "' ya existe");
+            throw new ResourceAlreadyExistsException("El nombre académico '" + dto.getNombre() + "' ya existe");
         }
 
         INivelAcademicoMapper.INSTANCE.updateFromDto(dto, e);
@@ -74,14 +72,14 @@ public class NivelAcademicoImp {
     //deactivate
     public NivelAcademicoResponseDTO desactivateSer(Long id) {
         NivelAcademicoEntity e = repNivel.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El nivel académico con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre académico con ID " + id + " no fue encontrado"));
 
         if (!e.isStatus()) {
-            throw new InvalidStateException("El nivel académico ya está desactivado");
+            throw new InvalidStateException("El nombre académico ya está desactivado");
         }
 
         if (userRepository.existsByNivelAcademicoIdAndStatusTrue(id)){
-            throw new InvalidStateException("No se puede desactivar el nivel academico por que contiene  usuarios activos");
+            throw new InvalidStateException("No se puede desactivar el nombre academico por que contiene  usuarios activos");
         }
 
         e.setStatus(false);
@@ -92,10 +90,10 @@ public class NivelAcademicoImp {
     //activate
     public NivelAcademicoResponseDTO activateSer(Long id) {
         NivelAcademicoEntity e = repNivel.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El nivel académico con ID " + id + " no fue encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("El nombre académico con ID " + id + " no fue encontrado"));
 
         if (e.isStatus()) {
-            throw new InvalidStateException("El nivel académico ya está activado");
+            throw new InvalidStateException("El nombre académico ya está activado");
         }
 
         e.setStatus(true);

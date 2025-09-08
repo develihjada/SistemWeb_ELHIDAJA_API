@@ -15,8 +15,8 @@ public class NivelAcademicoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo_nivel",unique = true,nullable = false, length = 100)
-    private String tipoNivel;
+    @Column(name = "nombre",unique = true,nullable = false, length = 100)
+    private String nombre;
 
     @Column(name = "status",nullable = false)
     private boolean status=true;

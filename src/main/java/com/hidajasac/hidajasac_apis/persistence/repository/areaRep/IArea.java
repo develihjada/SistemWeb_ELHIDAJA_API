@@ -7,6 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface IArea extends JpaRepository<AreaEntity,Long> {
-    //buscar por tipo_rol
-    Optional<AreaEntity> findByNombreArea(String tipo_rol);
+    //buscar por nombre
+    Optional<AreaEntity> findByNombre(String nombre);
 }

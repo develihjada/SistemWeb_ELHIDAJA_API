@@ -15,5 +15,5 @@ public class NivelAcademicoCreateDTO {
     @NotBlank(message = "El nombre del nivel academico no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre del nivel academico debe tener entre 3 y 50 caracteres")
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "El nombre del nivel academico solo puede contener letras y espacios")
-    private String tipoNivel;
+    private String nombre;
 }

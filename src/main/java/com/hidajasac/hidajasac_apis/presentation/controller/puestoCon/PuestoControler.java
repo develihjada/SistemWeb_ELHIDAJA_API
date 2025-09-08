@@ -3,7 +3,7 @@ package com.hidajasac.hidajasac_apis.presentation.controller.puestoCon;
 import com.hidajasac.hidajasac_apis.presentation.dto.puestoD.PuestoCreateDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.puestoD.PuestoResponseDTO;
 import com.hidajasac.hidajasac_apis.presentation.dto.puestoD.PuestoUpdateDTO;
-import com.hidajasac.hidajasac_apis.service.implementacion.puestoCon.PuestoImp;
+import com.hidajasac.hidajasac_apis.service.implementacion.puestoImp.PuestoImp;
 import com.hidajasac.hidajasac_apis.util.genericResponse.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class PuestoControler {
     }
 
     @GetMapping("/get_all")
-    public ResponseEntity<ApiResponse<PuestoResponseDTO>> getAll() {
+    public ResponseEntity<ApiResponse<List<PuestoResponseDTO>>> getAll() {
         List<PuestoResponseDTO> list = puestoService.getAllS();
         return ResponseEntity.ok(new ApiResponse<>(list));
     }
@@ -47,7 +47,7 @@ public class PuestoControler {
         return ResponseEntity.ok(new ApiResponse<>(updated));
     }
 
-    @PatchMapping("/deactivate/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<ApiResponse<PuestoResponseDTO>> deactivate(@PathVariable Long id) {
         PuestoResponseDTO updated = puestoService.deactivateSer(id);
         return ResponseEntity.ok(new ApiResponse<>(updated));

@@ -16,28 +16,27 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface IPuestoMapper {
+
     IPuestoMapper INSTANCE = Mappers.getMapper(IPuestoMapper.class);
 
     //response all attributes
     //output <-
-    // PuestoEntity -> PuestoResponseDTO
+    //Entity -> ResponseDTO
     PuestoResponseDTO puestoEntityToPuestoResponseDTO(PuestoEntity entity);
 
-    //for two atributes
+    //response some attributes
     //output <-
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "tipoPuesto", target = "tipoPuesto")
+    // Entity -> ResponseDTO
     PuestoNombreDTO puestoEntityToPuestoNombreDTO(PuestoEntity entity);
+
     //for new
-    //input
-    // PuestoCreateDTO -> PuestoEntity
-    @Mapping(source = "tipoPuesto", target = "tipoPuesto")
+    //input ->
+    //CreateDTO -> Entity
     PuestoEntity puestoCreateDTOToPuestoEntity(PuestoCreateDTO dto);
 
     //for update name
-    //input
-    // PuestoUpdateDTO -> PuestoEntity
-    @Mapping(source = "tipoPuesto", target = "tipoPuesto")
+    //input ->
+    //UpdateDTO -> Entity
     void updatePuestoFromDto(PuestoUpdateDTO dto, @MappingTarget PuestoEntity entity);
 
 }

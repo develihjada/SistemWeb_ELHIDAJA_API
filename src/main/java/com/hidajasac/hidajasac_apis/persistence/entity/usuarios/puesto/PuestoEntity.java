@@ -15,8 +15,8 @@ public class PuestoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo",unique = true,nullable = false, length = 100)
-    private String tipoPuesto;
+    @Column(name = "nombre",unique = true,nullable = false, length = 100)
+    private String nombre;
 
     @Column(name = "status",nullable = false)
     private boolean status;

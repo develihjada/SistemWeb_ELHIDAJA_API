@@ -24,7 +24,7 @@ public class AreaControler {
 
     //findAll
     @GetMapping("/get_all")
-    public ResponseEntity<ApiResponse<AreaResponeDTO>> getAll() {
+    public ResponseEntity<ApiResponse<List<AreaResponeDTO>>> getAll() {
         List<AreaResponeDTO> areas = areaService.getAllS();
         return ResponseEntity.ok(new ApiResponse<>(areas));
     }
@@ -51,7 +51,7 @@ public class AreaControler {
     }
 
     // delete
-    @PatchMapping("/deactivate/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<ApiResponse<AreaResponeDTO>> desactivate(@PathVariable Long id) {
         AreaResponeDTO updated =  areaService.desactivateSer(id);
         return ResponseEntity.ok(new ApiResponse<>(updated));
