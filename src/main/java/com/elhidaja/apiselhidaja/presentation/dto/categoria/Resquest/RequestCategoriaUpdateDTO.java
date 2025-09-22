@@ -13,7 +13,7 @@ public class RequestCategoriaUpdateDTO {
 
     @NotNull(message = "El idCategoria es obligatorio")
     @Min(value = 1, message = "El id de la categoría debe ser mayor o igual a 1")
-    private Long id_categoria;
+    private Long id;
 
     @NotBlank(message = "El nombre de la categoria no puede estar vacío")
     @Size(min = 3, max = 100, message = "El nombre de la categoria debe tener entre 3 y 100 caracteres")

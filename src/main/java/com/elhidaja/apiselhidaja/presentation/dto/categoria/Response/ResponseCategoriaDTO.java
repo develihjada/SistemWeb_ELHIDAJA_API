@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseCategoriaDTO  {
 
-    private Long id_categoria;
+    private Long id;
     private String nombre;
     private Boolean status;
 }

@@ -22,26 +22,29 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
     @Override
     public ResponseSubCategoriAllDTO getAllD(ResquestSubCategoriaOptionDTO option) {
         ResponseSubCategoriAllDTO rp = new ResponseSubCategoriAllDTO();
+        System.out.println(option.getOption());
         try {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                     .withProcedureName("SP_obtener_sub_categorias");
 
-            Map<String, Object> inParams = Map.of("option", option.getOption());
+            Map<String, Object> inParams = Map.of(
+                    "option", option.getOption());
+
             Map<String, Object> result = call.execute(inParams);
 
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> rows = (List<Map<String, Object>>) result.get("#result-set-1");
-
+            rows.forEach(row -> System.out.println("Keys: " + row.keySet()));
             List<ResponseSubCategoriaDTO> subCategorias = rows.stream().map(row -> {
                 ResponseSubCategoriaDTO dto = new ResponseSubCategoriaDTO();
-                dto.setId_sub_categoria(((Number) row.get("id_sub_categoria")).longValue());
-                dto.setCategoria_nombre((String) row.get("categoria_nombre"));
-                dto.setSub_categoria_nombre((String) row.get("sub_categoria_nombre"));
+                dto.setId(((Number) row.get("id_sub_categoria")).longValue());
+                dto.setCategoria((String) row.get("categoria_nombre"));
+                dto.setNombre((String) row.get("sub_categoria_nombre"));
                 dto.setStatus((Boolean) row.get("status"));
                 return dto;
             }).toList();
 
-            rp.setListaSubCategoria(subCategorias);
+            rp.setSubCategorias(subCategorias);
             rp.setExito(true);
             rp.setCodigo("200");
             rp.setMensaje("Consulta exitosa");
@@ -61,7 +64,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                     .withProcedureName("SP_obtener_sub_categoria_por_id");
 
-            Map<String, Object> inParams = Map.of("id_sub_categoria", id.getId_sub_categoria());
+            Map<String, Object> inParams = Map.of("id_sub_categoria", id.getId());
             Map<String, Object> result = call.execute(inParams);
 
             @SuppressWarnings("unchecked")
@@ -77,12 +80,12 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
                 } else {
 
                     ResponseSubCategoriaDTO dto = new ResponseSubCategoriaDTO();
-                    dto.setId_sub_categoria(((Number) row.get("id_sub_categoria")).longValue());
-                    dto.setCategoria_nombre((String) row.get("categoria_nombre"));
-                    dto.setSub_categoria_nombre((String) row.get("sub_categoria_nombre"));
+                    dto.setId(((Number) row.get("id_sub_categoria")).longValue());
+                    dto.setCategoria((String) row.get("categoria_nombre"));
+                    dto.setNombre((String) row.get("sub_categoria_nombre"));
                     dto.setStatus((Boolean) row.get("status"));
 
-                    rp.setResponse(dto);
+                    rp.setSubCategoria(dto);
                     rp.setExito(true);
                     rp.setCodigo("200");
                     rp.setMensaje("Subcategoría encontrada");
@@ -108,7 +111,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
                     .withProcedureName("SP_insertar_sub_categoria");
 
             Map<String, Object> inParams = Map.of(
-                    "id_categoria", dto.getId_categoria(),
+                    "id_categoria", dto.getIdCategoria(),
                     "nombre", dto.getNombre());
 
             Map<String, Object> result = call.execute(inParams);
@@ -146,7 +149,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
                     .withProcedureName("SP_actualizar_sub_categoria");
 
             Map<String, Object> inParams = Map.of(
-                    "id_sub_categoria", dto.getId_sub_categoria(),
+                    "id_sub_categoria", dto.getId(),
                     "nombre", dto.getNombre());
 
             Map<String, Object> result = call.execute(inParams);
@@ -183,7 +186,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                     .withProcedureName("SP_activar_sub_categoria");
 
-            Map<String, Object> inParams = Map.of("id_sub_categoria", id.getId_sub_categoria());
+            Map<String, Object> inParams = Map.of("id_sub_categoria", id.getId());
 
             Map<String, Object> result = call.execute(inParams);
 
@@ -196,7 +199,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
             if (resultSet != null) {
                 Map<String, Object> errorRow = resultSet.get(0);
                 String mensajeError = (String) errorRow.get("mensaje");
-
+                rp.setExito(false);
                 rp.setCodigo("400");
                 rp.setMensaje(mensajeError != null ? mensajeError : "No se pudo activar la subcategoría.");
             } else {
@@ -219,7 +222,8 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                     .withProcedureName("SP_desactivar_sub_categoria");
 
-            Map<String, Object> inParams = Map.of("id_sub_categoria", id.getId_sub_categoria());
+            Map<String, Object> inParams = Map.of(
+                    "id_sub_categoria", id.getId());
 
             Map<String, Object> result = call.execute(inParams);
 
@@ -238,7 +242,7 @@ public class SubCategoriaRepository implements SubCategoriaDAO {
             } else {
                 rp.setExito(true);
                 rp.setCodigo("200");
-                rp.setMensaje("Subcategoría desactivada correctamente.");
+                rp.setMensaje("Subcategoría desactivada ---correctamente.");
             }
 
         } catch (Exception e) {

@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class RequestUnidadMedidaIdDTO  {
     
-    @NotNull(message = "El idUnidadMedida es obligatorio")
+    @NotNull(message = "El id Unidad Medida es obligatorio")
     @Min(value = 1, message = "El id debe ser mayor o igual a 1")
-    private Long id_unidad_medida;
+    private Long id;
 
 }

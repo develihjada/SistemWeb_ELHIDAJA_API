@@ -11,7 +11,7 @@ public class CategoriaMapper {
             return null;
         }
         ResponseCategoriaDTO dto = new ResponseCategoriaDTO();
-        dto.setId_categoria(categoria.getIdCategoria());
+        dto.setId(categoria.getIdCategoria());
         dto.setNombre(categoria.getNombre());
         dto.setStatus(categoria.getStatus());
         return dto;

@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class RequesteCategoriaIdDTO {
 
-    @NotNull(message = "El idCategoria es obligatorio")
-    @Min(value = 1, message = "El id de la categoría debe ser mayor o igual a 1")
-    private Long id_categoria;
+    @NotNull(message = "El id es obligatorio")
+    @Min(value = 1, message = "El id debe ser mayor o igual a 1")
+    private Long id;
 
 }

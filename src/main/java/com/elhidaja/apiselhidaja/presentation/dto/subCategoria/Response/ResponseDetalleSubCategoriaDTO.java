@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({ "response", "exito", "mensaje",  "codigo" })
+@JsonPropertyOrder({ "subCategoria", "exito", "mensaje",  "codigo" })
 public class ResponseDetalleSubCategoriaDTO extends GlobalResponse {
-    private ResponseSubCategoriaDTO response;
+    private ResponseSubCategoriaDTO subCategoria;
 }

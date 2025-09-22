@@ -7,14 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Response.ResponseCategoriAllDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Response.ResponseCategoriaDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Response.ResponseDetalleCategoriaDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Response.ResponserCategoriaMensajeDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Resquest.RequestCategoriaInsertDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Resquest.RequestCategoriaUpdateDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Resquest.RequesteCategoriaIdDTO;
-import com.elhidaja.apiselhidaja.presentation.dto.categoria.Resquest.ResquestCategoriaOptionDTO;
+import com.elhidaja.apiselhidaja.presentation.dto.categoria.Response.*;
+import com.elhidaja.apiselhidaja.presentation.dto.categoria.Resquest.*;
 import com.elhidaja.apiselhidaja.service.DAO.CategoriaDAO;
 
 @Repository
@@ -47,13 +41,13 @@ public class CategoriaRepository implements CategoriaDAO {
             // Convertir cada fila en un ResponseCategoriaDTO
             List<ResponseCategoriaDTO> categorias = rows.stream().map(row -> {
                 ResponseCategoriaDTO dto = new ResponseCategoriaDTO();
-                dto.setId_categoria(((Number) row.get("id_categoria")).longValue());
+                dto.setId(((Number) row.get("id_categoria")).longValue());
                 dto.setNombre((String) row.get("nombre"));
                 dto.setStatus((Boolean) row.get("status"));
                 return dto;
             }).toList();
 
-            rp.setListaCategoria(categorias);
+            rp.setCategorias(categorias);
 
             rp.setExito(true);
             rp.setCodigo("200");
@@ -75,7 +69,7 @@ public class CategoriaRepository implements CategoriaDAO {
 
             // Parámetros de entrada del SP ption
             Map<String, Object> inParams = Map.of(
-                    "id_categoria", id.getId_categoria());
+                    "id_categoria", id.getId());
 
             // Ejecutar el SP
             Map<String, Object> result = call.execute(inParams);
@@ -94,11 +88,11 @@ public class CategoriaRepository implements CategoriaDAO {
                 } else {
 
                     ResponseCategoriaDTO rcd = new ResponseCategoriaDTO();
-                    rcd.setId_categoria(((Number) row.get("id_categoria")).longValue());
+                    rcd.setId(((Number) row.get("id_categoria")).longValue());
                     rcd.setNombre((String) row.get("nombre"));
                     rcd.setStatus((Boolean) row.get("status"));
 
-                    rp.setResponse(rcd);
+                    rp.setCategoria(rcd);
                     rp.setExito(true);
                     rp.setCodigo("200");
                     rp.setMensaje("categoria encontrada");
@@ -128,7 +122,7 @@ public class CategoriaRepository implements CategoriaDAO {
 
             // Parámetros de entrada del SP ID y nombre
             Map<String, Object> inParams = Map.of(
-                    "id_categoria", id.getId_categoria());
+                    "id_categoria", id.getId());
 
             // Ejecutar el SP
             Map<String, Object> result = call.execute(inParams);
@@ -169,7 +163,7 @@ public class CategoriaRepository implements CategoriaDAO {
 
             // Parámetros de entrada del SP ID y nombre
             Map<String, Object> inParams = Map.of(
-                    "id_categoria", id.getId_categoria());
+                    "id_categoria", id.getId());
 
             // Ejecutar el SP
             Map<String, Object> result = call.execute(inParams);
@@ -209,7 +203,7 @@ public class CategoriaRepository implements CategoriaDAO {
 
             // Parámetros de entrada del SP ID y nombre
             Map<String, Object> inParams = Map.of(
-                    "id_categoria", objCategoria.getId_categoria(),
+                    "id_categoria", objCategoria.getId(),
                     "nombre", objCategoria.getNombre());
 
             // Ejecutar el SP

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseUnidadMedidaDTO  {
 
-    private Long id_unidad_medida;
+    private Long id;
     private String nombre;
     private Boolean status;
 }

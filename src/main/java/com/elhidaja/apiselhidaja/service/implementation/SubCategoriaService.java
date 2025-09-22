@@ -12,15 +12,12 @@ import com.elhidaja.apiselhidaja.presentation.dto.subCategoria.Resquest.RequestS
 import com.elhidaja.apiselhidaja.presentation.dto.subCategoria.Resquest.RequestSubCategoriaUpdateDTO;
 import com.elhidaja.apiselhidaja.presentation.dto.subCategoria.Resquest.ResquestSubCategoriaOptionDTO;
 
-import jakarta.validation.Validator;
 @Service
 public class SubCategoriaService {
       private final SubCategoriaRepository subCatRepo;
-    private final Validator validator;
 
-    public SubCategoriaService(SubCategoriaRepository subCatRepo, Validator validator) {
+    public SubCategoriaService(SubCategoriaRepository subCatRepo) {
         this.subCatRepo = subCatRepo;
-        this.validator = validator;
     }
 
     @Transactional

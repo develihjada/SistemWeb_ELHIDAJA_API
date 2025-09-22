@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseSubCategoriaDTO {
 
-    private Long id_sub_categoria;
-    private String categoria_nombre;
-    private String sub_categoria_nombre;
+    private Long id;
+    private String categoria;
+    private String nombre;
     private Boolean status;
 }

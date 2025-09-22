@@ -30,7 +30,7 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
         ResponseUnidadMedidaAllDTO rp = new ResponseUnidadMedidaAllDTO();
         try {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
-                    .withProcedureName("SP_obtener_unidades_medida");
+                    .withProcedureName("SP_obtener_unidad_medidas");
 
             Map<String, Object> inParams = Map.of("option", option.getOption());
 
@@ -41,13 +41,13 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
 
             List<ResponseUnidadMedidaDTO> lista = rows.stream().map(row -> {
                 ResponseUnidadMedidaDTO dto = new ResponseUnidadMedidaDTO();
-                dto.setId_unidad_medida(((Number) row.get("id_unidad_medida")).longValue());
+                dto.setId(((Number) row.get("id_unidad_medida")).longValue());
                 dto.setNombre((String) row.get("nombre"));
                 dto.setStatus((Boolean) row.get("status"));
                 return dto;
             }).toList();
 
-            rp.setListaCategoria(lista);
+            rp.setUnidadMedidas(lista);
             rp.setExito(true);
             rp.setCodigo("200");
             rp.setMensaje("Consulta exitosa");
@@ -67,7 +67,7 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
             SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                     .withProcedureName("SP_obtener_unidad_medida_por_id");
 
-            Map<String, Object> inParams = Map.of("id_unidad_medida", id.getId_unidad_medida());
+            Map<String, Object> inParams = Map.of("id_unidad_medida", id.getId());
 
             Map<String, Object> result = call.execute(inParams);
 
@@ -83,11 +83,11 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
                     rp.setCodigo("404");
                 } else {
                     ResponseUnidadMedidaDTO dto = new ResponseUnidadMedidaDTO();
-                    dto.setId_unidad_medida(((Number) row.get("id_unidad_medida")).longValue());
+                    dto.setId(((Number) row.get("id_unidad_medida")).longValue());
                     dto.setNombre((String) row.get("nombre"));
                     dto.setStatus((Boolean) row.get("status"));
 
-                    rp.setResponse(dto);
+                    rp.setUnidadMedida(dto);
                     rp.setExito(true);
                     rp.setCodigo("200");
                     rp.setMensaje("Unidad de medida encontrada");
@@ -115,7 +115,7 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
                     .withProcedureName("SP_actualizar_unidad_medida");
 
             Map<String, Object> inParams = Map.of(
-                    "id_unidad_medida", obj.getId_unidad_medida(),
+                    "id_unidad_medida", obj.getId(),
                     "nombre", obj.getNombre());
 
             Map<String, Object> result = call.execute(inParams);
@@ -189,7 +189,7 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
                     .withProcedureName("SP_activar_unidad_medida");
 
             Map<String, Object> inParams = Map.of(
-                    "id_unidad_medida", id.getId_unidad_medida());
+                    "id_unidad_medida", id.getId());
 
             Map<String, Object> result = call.execute(inParams);
 
@@ -227,7 +227,7 @@ public class UnidadMedidaRepository implements UnidadMedidaDAO {
                     .withProcedureName("SP_desactivar_unidad_medida");
 
             Map<String, Object> inParams = Map.of(
-                    "id_unidad_medida", id.getId_unidad_medida());
+                    "id_unidad_medida", id.getId());
 
             Map<String, Object> result = call.execute(inParams);
 

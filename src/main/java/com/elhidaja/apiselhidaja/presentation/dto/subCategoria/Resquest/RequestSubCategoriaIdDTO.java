@@ -8,8 +8,8 @@ import lombok.Data;
 public class RequestSubCategoriaIdDTO {
 
 
-    @NotNull(message = "El idSubCategoria es obligatorio")
+    @NotNull(message = "El id Sub Categoria es obligatorio")
     @Min(value = 1, message = "El id debe ser mayor o igual a 1")
-    private Long id_sub_categoria;
+    private Long id;
 
 }
